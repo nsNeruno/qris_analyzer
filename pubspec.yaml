@@ -68,13 +68,16 @@ dependencies:
   provider: ^6.0.5
 
   # Core Logics
-  qris: ^0.6.6
+  qris: ^0.7.0
 
   # Render Saved QR Codes
   qr_flutter: ^4.1.0
 
   # Caching scanned codes
   shared_preferences: ^2.2.1
+
+  # Launch External Links
+  url_launcher: ^6.1.14
 
 dev_dependencies:
   flutter_test:

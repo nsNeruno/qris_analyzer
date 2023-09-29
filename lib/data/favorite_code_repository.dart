@@ -4,9 +4,7 @@ import 'package:qris_analyzer/utils/logger.dart';
 
 class FavoriteCodeRepository extends PrefListStorage<CachedCode> {
 
-  FavoriteCodeRepository(): super('x-favorite-codes',) {
-    _reload();
-  }
+  FavoriteCodeRepository(): super('x-favorite-codes',);
 
   @override
   Future<void> add(CachedCode value) async {
@@ -34,6 +32,10 @@ class FavoriteCodeRepository extends PrefListStorage<CachedCode> {
 
   @override
   Future<List<CachedCode>?> readValues() async {
+    if (!_hasFirstLoad) {
+      await _reload();
+      _hasFirstLoad = true;
+    }
     return _internal.toList();
   }
 
@@ -55,4 +57,5 @@ class FavoriteCodeRepository extends PrefListStorage<CachedCode> {
   }
 
   final _internal = <CachedCode>{};
+  bool _hasFirstLoad = false;
 }

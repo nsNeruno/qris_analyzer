@@ -4,6 +4,10 @@ abstract class DashboardEvent {
   const DashboardEvent();
 }
 
+class DashboardReloadSavedCodes extends DashboardEvent {
+  const DashboardReloadSavedCodes();
+}
+
 class DashboardLoadHistories extends DashboardEvent {
   const DashboardLoadHistories();
 }

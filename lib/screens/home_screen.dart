@@ -33,10 +33,7 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
         );
         final dbBloc = context.read<DashboardBloc>();
         dbBloc.add(
-          const DashboardLoadHistories(),
-        );
-        dbBloc.add(
-          const DashboardLoadFavorites(),
+          const DashboardReloadSavedCodes(),
         );
       },
     );

@@ -17,9 +17,27 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
       : _cacheRepository = cacheRepository,
         _favoriteRepository = favoriteRepository,
         super(const DashboardState._(),) {
+    on<DashboardReloadSavedCodes>(_onReload,);
     on<DashboardLoadHistories>(_onLoadHistories,);
     on<DashboardLoadFavorites>(_onLoadFavorites,);
     on<DashboardAddFavorite>(_onAddFavorite,);
+  }
+
+  FutureOr<void> _onReload(
+    DashboardReloadSavedCodes event, Emitter<DashboardState> emit,
+  ) async {
+    final codes = await Future.wait(
+      [
+        _cacheRepository.readValues(),
+        _favoriteRepository.readValues(),
+      ],
+    );
+    emit(
+      state._copyWith(
+        recentCodes: codes[0],
+        favoriteCodes: codes[1],
+      ),
+    );
   }
 
   FutureOr<void> _onLoadHistories(

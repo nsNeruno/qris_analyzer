@@ -7,9 +7,7 @@ class CachedCodeRepository extends PrefListStorage<CachedCode> {
 
   CachedCodeRepository({
     this.maxCodes = AppConstants.maxRecentCodeLength,
-  }): super('x-cached-codes',) {
-    _reload();
-  }
+  }): super('x-cached-codes',);
 
   @override
   Future<void> add(CachedCode value) async {
@@ -23,6 +21,7 @@ class CachedCodeRepository extends PrefListStorage<CachedCode> {
   Future<void> _reload() async {
     final raw = (await prefs).getStringList(key,) ?? [];
     final data = <CachedCode>[];
+    debugLog('Data count: ${raw.length}', name: '$runtimeType._reload',);
     for (final rawData in raw) {
       try {
         data.add(CachedCode.fromJson(rawData,),);
@@ -39,6 +38,10 @@ class CachedCodeRepository extends PrefListStorage<CachedCode> {
 
   @override
   Future<List<CachedCode>?> readValues() async {
+    if (!_hasFirstLoad) {
+      await _reload();
+      _hasFirstLoad = true;
+    }
     return _internal.toList();
   }
 
@@ -61,4 +64,6 @@ class CachedCodeRepository extends PrefListStorage<CachedCode> {
 
   final _internal = <CachedCode>[];
   final int maxCodes;
+
+  bool _hasFirstLoad = false;
 }
