@@ -21,6 +21,8 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
     on<DashboardLoadHistories>(_onLoadHistories,);
     on<DashboardLoadFavorites>(_onLoadFavorites,);
     on<DashboardAddFavorite>(_onAddFavorite,);
+    on<DashboardClearRecentEntries>(_onClearRecentEntries,);
+    on<DashboardClearFavorites>(_onClearFavorites,);
   }
 
   FutureOr<void> _onReload(
@@ -71,6 +73,28 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
       state._copyWith(
         favoriteCodes: newList ?? [],
         transient: event.code,
+      ),
+    );
+  }
+
+  FutureOr<void> _onClearRecentEntries(
+    DashboardClearRecentEntries event, Emitter<DashboardState> emit,
+  ) async {
+    await _cacheRepository.removeAll();
+    emit(
+      state._copyWith(
+        recentCodes: [],
+      ),
+    );
+  }
+
+  FutureOr<void> _onClearFavorites(
+    DashboardClearFavorites event, Emitter<DashboardState> emit,
+  ) async {
+    await _favoriteRepository.removeAll();
+    emit(
+      state._copyWith(
+        favoriteCodes: [],
       ),
     );
   }

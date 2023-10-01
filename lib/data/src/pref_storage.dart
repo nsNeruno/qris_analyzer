@@ -33,6 +33,8 @@ abstract class PrefListStorage<T extends Serializable> {
 
   Future<T?> remove(T value,);
 
+  Future<bool> removeAll();
+
   Future<void> delete() async {
     await (await prefs).remove(key,);
   }

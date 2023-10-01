@@ -12,7 +12,7 @@ Xcode - develop for iOS and macOS (Xcode 15.0)
 ```
 
 ## TO-DO
-- Add App Icon
+- ~~Add App Icon~~
 - Publish the app to Play Store, and optionally, to Apple App Store
 - Localize the app in Bahasa (id_ID)
 - Enhance the design

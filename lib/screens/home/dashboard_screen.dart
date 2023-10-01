@@ -9,10 +9,16 @@ class _DashboardScreen extends StatelessWidget {
 
     return Column(
       children: [
+        const RSizedBox(height: 20,),
         const RPadding(
-          padding: EdgeInsets.all(24.0,),
+          padding: EdgeInsets.all(48.0,),
           child: Text(
             'View Recent Scanned Codes, or Scan New Code',
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 16,
+            ),
+            textAlign: TextAlign.center,
           ),
         ),
         Expanded(

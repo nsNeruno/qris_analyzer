@@ -22,3 +22,11 @@ class DashboardAddFavorite extends DashboardEvent {
 
   final CachedCode code;
 }
+
+class DashboardClearRecentEntries extends DashboardEvent {
+  const DashboardClearRecentEntries();
+}
+
+class DashboardClearFavorites extends DashboardEvent {
+  const DashboardClearFavorites();
+}

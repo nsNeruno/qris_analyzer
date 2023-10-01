@@ -52,6 +52,12 @@ class CachedCodeRepository extends PrefListStorage<CachedCode> {
     return removed ? value : null;
   }
 
+  @override
+  Future<bool> removeAll() async {
+    _internal.clear();
+    return (await prefs).remove(key,);
+  }
+
   Future<void> _save() async {
     final mapped = await Future.wait(
       _internal.map((e) => e.toJsonStringAsync(),),
