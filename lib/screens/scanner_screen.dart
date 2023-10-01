@@ -7,6 +7,7 @@ import 'package:qris_analyzer/blocs/analyzer_bloc.dart';
 import 'package:qris_analyzer/blocs/dashboard_bloc.dart';
 import 'package:qris_analyzer/blocs/setting_bloc.dart';
 import 'package:qris_analyzer/screens/routes.dart';
+import 'package:qris_analyzer/utils/alerts.dart';
 import 'package:qris_analyzer/utils/os_checker.dart';
 
 class ScannerScreen extends StatefulWidget {
@@ -49,9 +50,28 @@ class _ScannerScreenState extends State<ScannerScreen> with WidgetsBindingObserv
               AppRoutes.details,
             );
             return;
+          } else {
+            scannerController.start();
           }
+        } else {
+          showPlatformAwareDialog(
+            context: context,
+            titleBuilder: (_) => const Text('Info',),
+            contentBuilder: (_) => const Text('Invalid QRIS Data',),
+            actionsBuilder: (_) => [
+              TextButton(
+                onPressed: () {
+                  Navigator.of(_,).pop();
+                },
+                child: const Text('Close',),
+              ),
+            ],
+          ).then(
+            (_) {
+              scannerController.start();
+            },
+          );
         }
-        scannerController.start();
       },
       child: Scaffold(
         body: BlocSelector<SettingBloc, SettingState, bool>(

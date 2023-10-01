@@ -6,6 +6,7 @@ import 'package:qris_analyzer/blocs/dashboard_bloc.dart';
 import 'package:qris_analyzer/blocs/setting_bloc.dart';
 import 'package:qris_analyzer/models/cached_code.dart';
 import 'package:qris_analyzer/screens/routes.dart';
+import 'package:qris_analyzer/utils/alerts.dart';
 import 'package:qris_analyzer/utils/bottom_sheet.dart';
 import 'package:qris_analyzer/widgets/code_entry.dart';
 
@@ -61,6 +62,20 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
               );
               Navigator.of(context,).pushNamed(AppRoutes.details,);
             }
+          } else {
+            showPlatformAwareDialog(
+              context: context,
+              titleBuilder: (_) => const Text('Info',),
+              contentBuilder: (_) => const Text('Invalid QRIS Data',),
+              actionsBuilder: (_) => [
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(_,).pop();
+                  },
+                  child: const Text('Close',),
+                ),
+              ],
+            );
           }
         },
         listenWhen: (_, state,) {

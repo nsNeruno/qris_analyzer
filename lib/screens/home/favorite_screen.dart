@@ -35,6 +35,9 @@ class _FavoriteScreen extends StatelessWidget {
                   _confirmRemoveFromFavorite(context, code,);
                 }
               },
+              onEdit: (code) {
+                _editCustomName(context, code,);
+              },
             );
           },
           separatorBuilder: (_, __,) => const RSizedBox(height: 12,),
@@ -83,6 +86,50 @@ class _FavoriteScreen extends StatelessWidget {
         if (shouldRemove ?? false) {
           context.read<DashboardBloc>().add(
             DashboardAddFavorite(code,),
+          );
+        }
+      },
+    );
+  }
+
+  void _editCustomName(BuildContext context, CachedCode code,) {
+    late final controller = TextEditingController(
+      text: code.customName ?? '',
+    );
+    showCustomModalBottomSheet<String>(
+      context: context,
+      heightRatio: 0.2,
+      builder: (_) {
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            TextField(
+              controller: controller,
+              decoration: const InputDecoration(
+                border: OutlineInputBorder(),
+                labelText: 'Custom Name',
+              ),
+            ),
+            const Spacer(),
+            SizedBox(
+              width: double.infinity,
+              child: ElevatedButton(
+                onPressed: () {
+                  Navigator.of(_,).pop(controller.text.trim(),);
+                },
+                child: const Text('Save',),
+              ),
+            ),
+          ],
+        );
+      },
+    ).then(
+      (_) {
+        if (_?.isNotEmpty ?? false) {
+          context.read<DashboardBloc>().add(
+            DashboardUpdateFavoriteName(
+              code: code, customName: _!,
+            ),
           );
         }
       },

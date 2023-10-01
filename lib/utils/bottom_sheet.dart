@@ -13,7 +13,7 @@ Future<T?> showCustomModalBottomSheet<T>({
     context: context,
     isScrollControlled: true,
     builder: (_) {
-      final mq = MediaQuery.of(context,);
+      final mq = MediaQuery.of(_,);
       return Padding(
         padding: EdgeInsets.only(bottom: mq.viewInsets.bottom,),
         child: SizedBox(

@@ -12,6 +12,7 @@ class CodeEntry extends StatelessWidget {
     required this.code,
     this.favoriteLookup = const {},
     this.onFavorite,
+    this.onEdit,
   });
 
   @override
@@ -40,7 +41,15 @@ class CodeEntry extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(code.merchantName ?? 'Unnamed Merchant',),
+                  Builder(
+                    builder: (context) {
+                      final customName = code.customName;
+                      final name = customName != null
+                          ? '$customName (${code.merchantName})'
+                          : code.merchantName ?? 'Unnamed Merchant';
+                      return Text(name,);
+                    }
+                  ),
                   const RSizedBox(height: 8,),
                   Text(
                     'Created at: ${code.createdAt.toDateFormat()}',
@@ -57,6 +66,13 @@ class CodeEntry extends StatelessWidget {
                 ],
               ),
             ),
+            if (onEdit != null)
+              IconButton(
+                onPressed: () {
+                  onEdit?.call(code,);
+                },
+                icon: const Icon(Icons.edit,),
+              ),
             IconButton(
               onPressed: () {
                 onFavorite?.call(code,);
@@ -107,4 +123,5 @@ class CodeEntry extends StatelessWidget {
   final CachedCode code;
   final Map<CachedCode, bool> favoriteLookup;
   final ValueChanged<CachedCode>? onFavorite;
+  final ValueChanged<CachedCode>? onEdit;
 }

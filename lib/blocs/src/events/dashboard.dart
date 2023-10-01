@@ -30,3 +30,13 @@ class DashboardClearRecentEntries extends DashboardEvent {
 class DashboardClearFavorites extends DashboardEvent {
   const DashboardClearFavorites();
 }
+
+class DashboardUpdateFavoriteName extends DashboardEvent {
+
+  const DashboardUpdateFavoriteName({
+    required this.code, required this.customName,
+  });
+
+  final CachedCode code;
+  final String customName;
+}
